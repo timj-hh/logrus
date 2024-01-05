@@ -288,7 +288,13 @@ func (entry *Entry) write() {
 	defer entry.Logger.mu.Unlock()
 	serialized, err := entry.Logger.Formatter.Format(entry)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to obtain reader, %v\n", err)
+		fmt.Fprintf(os.Stderr, "Failed to obtain reader here, %v %v\n", err, entry)
+		fmt.Println(entry)
+		fmt.Println(entry.Data)
+		fmt.Println(entry.Caller.Func)
+		fmt.Println(entry.Caller.Line)
+		fmt.Println(entry.Caller.File)
+		fmt.Println("This is the entry")
 		return
 	}
 	if _, err := entry.Logger.Out.Write(serialized); err != nil {
